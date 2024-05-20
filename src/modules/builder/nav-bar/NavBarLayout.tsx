@@ -145,43 +145,29 @@ const NavBarLayout = () => {
           <NavMenuItem caption="Colours" popoverChildren={<ThemeSelect />} />
         </NavBarMenu>
         <NavBarActions>
-          <StyledButton
-            variant="text"
-            id="export-button"
-            aria-controls={open ? 'export-menu' : undefined}
-            aria-haspopup="true"
-            aria-expanded={open ? 'true' : undefined}
-            onClick={handleClick}
-          >
+          <StyledButton variant="text" id="export-button" onClick={handleClick}>
             EXPORT
           </StyledButton>
           <Menu
             id="export-menu"
             anchorEl={anchorEl}
-            open={open}
+            open={open && anchorEl === document.getElementById('export-button')} // Only open if "Export" button clicked
             onClose={handleClose}
             MenuListProps={{
               'aria-labelledby': 'export-button',
             }}
           >
-            <MenuItem onClick={exportResumeData}>Export JSON </MenuItem>
+            <MenuItem onClick={exportResumeData}>Export JSON</MenuItem> {/* Renamed for clarity */}
             <MenuItem onClick={handleClose}>Export CSV</MenuItem>
           </Menu>
 
-          <StyledButton
-            variant="text"
-            id="import-button"
-            aria-controls={open ? 'import-menu' : undefined}
-            aria-haspopup="true"
-            aria-expanded={open ? 'true' : undefined}
-            onClick={handleClick}
-          >
+          <StyledButton variant="text" id="import-button" onClick={handleClick}>
             IMPORT
           </StyledButton>
           <Menu
             id="import-menu"
             anchorEl={anchorEl}
-            open={open}
+            open={open && anchorEl === document.getElementById('import-button')} // Only open if "Import" button clicked
             onClose={handleClose}
             MenuListProps={{
               'aria-labelledby': 'import-button',
@@ -195,7 +181,7 @@ const NavBarLayout = () => {
                 }
               }}
             >
-              Import JSON{' '}
+              Import JSON
               <input
                 type="file"
                 hidden
