@@ -20,7 +20,7 @@ export default function MordernTemplate() {
         label={resumeData.basics.label}
         url={resumeData.basics.url}
         email={resumeData.basics.email}
-        city={resumeData.basics.location.city}
+        city={resumeData.basics.location && resumeData.basics.location.city}
         phone={resumeData.basics.phone}
         image={resumeData.basics.image}
       />

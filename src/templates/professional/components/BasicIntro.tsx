@@ -35,7 +35,7 @@ export default function BasicIntro({ basics }: { basics: IBasics }) {
         </div>
         <div className="flex gap-2">
           <Image src={'/icons/location.svg'} alt="Location" width={12} height={12} />
-          <span className="text-xs">{basics.location.city}</span>
+          <span className="text-xs">{basics.location && basics.location.city}</span>
         </div>
       </div>
     </div>

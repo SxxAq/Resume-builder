@@ -13,6 +13,7 @@ import * as React from 'react';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import { json2csv } from 'json-2-csv';
 
 import { AVAILABLE_TEMPLATES } from 'src/helpers/constants';
 import DEFAULT_RESUME_JSON from 'src/helpers/constants/resume-data.json';
@@ -37,7 +38,19 @@ const NavBarLayout = () => {
   const [openToast, setOpenToast] = useState(false);
   const fileInputRef = useRef(null);
 
-  const exportResumeData = useCallback(() => {
+  const flattenObject = (obj: any, prefix = '') => {
+    return Object.keys(obj).reduce((acc, k) => {
+      const pre = prefix.length ? `${prefix}.` : '';
+      if (typeof obj[k] === 'object' && obj[k] !== null && !Array.isArray(obj[k])) {
+        Object.assign(acc, flattenObject(obj[k], pre + k));
+      } else {
+        acc[pre + k] = obj[k];
+      }
+      return acc;
+    }, {} as any);
+  };
+
+  const exportResumeData = useCallback(async (format: 'json' | 'csv') => {
     const updatedResumeJson = {
       ...DEFAULT_RESUME_JSON,
       basics: {
@@ -60,12 +73,28 @@ const NavBarLayout = () => {
       activities: useActivity.getState().activities,
     };
     const fileName = updatedResumeJson.basics.name + '_' + new Date().toLocaleString();
-    const exportType = exportFromJSON.types.json;
-    exportFromJSON({
-      data: updatedResumeJson,
-      fileName,
-      exportType,
-    });
+
+    if (format === 'json') {
+      exportFromJSON({
+        data: updatedResumeJson,
+        fileName,
+        exportType: exportFromJSON.types.json,
+      });
+    } else if (format === 'csv') {
+      try {
+        const flattenedData = Object.keys(updatedResumeJson).map((key) =>
+          flattenObject({ [key]: updatedResumeJson[key] })
+        );
+        const csv = await json2csv(flattenedData);
+        const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = `${fileName}.csv`;
+        link.click();
+      } catch (error) {
+        console.error('Error converting JSON to CSV:', error);
+      }
+    }
   }, []);
 
   const handleFileChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
@@ -157,8 +186,8 @@ const NavBarLayout = () => {
               'aria-labelledby': 'export-button',
             }}
           >
-            <MenuItem onClick={exportResumeData}>Export JSON</MenuItem> {/* Renamed for clarity */}
-            <MenuItem onClick={handleClose}>Export CSV</MenuItem>
+            <MenuItem onClick={() => exportResumeData('json')}>Export JSON</MenuItem>
+            <MenuItem onClick={() => exportResumeData('csv')}>Export CSV</MenuItem>
           </Menu>
 
           <StyledButton variant="text" id="import-button" onClick={handleClick}>
