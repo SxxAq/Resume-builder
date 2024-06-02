@@ -1,14 +1,18 @@
+// components/HomeLayout.tsx
 import { NavBarActions, StyledButton } from '../builder/nav-bar/atoms';
 import { motion, useAnimation } from 'framer-motion';
-
 import { BsGithub } from 'react-icons/bs';
 import { Button } from '@mui/material';
 import FeatureSection from './components/Feature';
 import Image from 'next/image';
 import Link from 'next/link';
 import Person from './components/Person';
+import { useAuth } from '../../context/AuthContext';
+import { useRouter } from 'next/router';
 
 const HomeLayout = () => {
+  const { user } = useAuth();
+  const router = useRouter();
   const controls = useAnimation();
   const animationEffectsHoverEnter = { scale: 1.05 };
   const animationEffectsHoverLeave = { scale: 1 };
@@ -16,10 +20,18 @@ const HomeLayout = () => {
     scale: [0.9, 1],
     opacity: [0, 1],
   };
-  const transtionEffects = {
+  const transitionEffects = {
     type: 'spring',
     stiffness: 400,
     damping: 17,
+  };
+
+  const handleBuildResumeClick = () => {
+    if (user) {
+      router.push('/builder');
+    } else {
+      router.push('/auth');
+    }
   };
 
   return (
@@ -29,8 +41,6 @@ const HomeLayout = () => {
           <Image src={'/icons/resume-icon.png'} alt="logo" height="36" width="36" />
         </Link>
         <div className="flex-auto flex justify-end items-center mr-5">
-          {' '}
-          {/* Changed ml-5 to mr-5 */}
           <NavBarActions>
             <Link href="/builder" passHref={true}>
               <StyledButton variant="text">Editor</StyledButton>
@@ -38,6 +48,9 @@ const HomeLayout = () => {
 
             <Link href="#about-us" passHref={true}>
               <StyledButton variant="text">About us</StyledButton>
+            </Link>
+            <Link href="/auth" passHref={true}>
+              <StyledButton variant="text">Login</StyledButton>
             </Link>
             <a
               href={'https://github.com/SxxAq/Resume-builder'}
@@ -60,7 +73,7 @@ const HomeLayout = () => {
             className="grid grid-cols-12 pt-12 md:pt-24"
             initial={{ opacity: 0 }}
             animate={animationEffectsFirstLoad}
-            transition={transtionEffects}
+            transition={transitionEffects}
           >
             <div className="col-span-12 sm:col-span-4">
               <motion.img
@@ -69,10 +82,10 @@ const HomeLayout = () => {
                 alt="resume-3d"
                 className="w-6/12 sm:w-9/12"
                 onMouseEnter={() => {
-                  controls.start(animationEffectsHoverEnter, transtionEffects);
+                  controls.start(animationEffectsHoverEnter, transitionEffects);
                 }}
                 onMouseLeave={() => {
-                  controls.start(animationEffectsHoverLeave, transtionEffects);
+                  controls.start(animationEffectsHoverLeave, transitionEffects);
                 }}
                 animate={controls}
               />
@@ -89,11 +102,9 @@ const HomeLayout = () => {
                   —Mark Twain
                 </p>
               </div>
-              <Link href="/builder" passHref={true}>
-                <Button variant="contained" className="bg-resume-800 mb-2">
-                  BUILD YOUR RESUME
-                </Button>
-              </Link>
+              <Button variant="contained" className="bg-resume-800 mb-2" onClick={handleBuildResumeClick}>
+                BUILD YOUR RESUME
+              </Button>
               <p
                 className="xl:invisible text-resume-800"
                 style={{ fontFamily: "'Roboto Slab', serif" }}
@@ -110,7 +121,7 @@ const HomeLayout = () => {
         style={{ fontFamily: "'Roboto Slab', serif" }}
         initial={{ opacity: 0 }}
         animate={animationEffectsFirstLoad}
-        transition={transtionEffects}
+        transition={transitionEffects}
       >
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <FeatureSection />

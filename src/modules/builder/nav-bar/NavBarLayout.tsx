@@ -14,6 +14,9 @@ import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { json2csv } from 'json-2-csv';
+import { signOut } from 'firebase/auth';
+import { auth } from '../../../firebase'; // Adjust the path to your Firebase configuration
+import { useRouter } from 'next/router';
 
 import { AVAILABLE_TEMPLATES } from 'src/helpers/constants';
 import DEFAULT_RESUME_JSON from 'src/helpers/constants/resume-data.json';
@@ -159,6 +162,15 @@ const NavBarLayout = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const router = useRouter();
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      router.push('/');
+    } catch (error) {
+      console.error('Error logging out:', error);
+    }
+  };
 
   return (
     <nav className="h-14 w-full bg-resume-800 relative flex py-2.5 pl-5 pr-4 items-center shadow-level-8dp z-20 print:hidden">
@@ -241,6 +253,9 @@ const NavBarLayout = () => {
             />
           </StyledButton> */}
           <PrintResume />
+          <StyledButton variant="text" onClick={handleLogout}>
+            Logout
+          </StyledButton>
         </NavBarActions>
       </div>
       <Toast

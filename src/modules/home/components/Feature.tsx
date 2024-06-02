@@ -9,7 +9,7 @@ function FeatureSection() {
           <Image src="/icons/style.svg" alt="style" height="56" width="56" />
         </CardPinnnedIcon>
         <p className="text-xl mr-14">
-          Customise with <strong>templates and themes</strong>!
+          Customize with <strong>templates and themes</strong>!
         </p>
       </FeatureCard>
 
@@ -18,7 +18,7 @@ function FeatureSection() {
           <Image src="/icons/speed.svg" alt="speed" height="56" width="56" />
         </CardPinnnedIcon>
         <p className="text-xl mr-14">
-          Simple <strong>interface</strong> that helps you build quicky!
+          Simple <strong>interface</strong> that helps you build quickly!
         </p>
       </FeatureCard>
 
@@ -27,7 +27,7 @@ function FeatureSection() {
           <Image src="/icons/magic.svg" alt="magic" height="56" width="56" />
         </CardPinnnedIcon>
         <p className="text-xl mr-14">
-          No <strong>sign up </strong>needed — go straight to building!
+          Create your <strong>professional resume</strong> with ease!
         </p>
       </FeatureCard>
 
@@ -36,7 +36,7 @@ function FeatureSection() {
           <Image src="/icons/lock.svg" alt="lock" height="56" width="56" />
         </CardPinnnedIcon>
         <p className="text-xl mr-14">
-          Your <strong>data</strong> never leaves your device
+          Your <strong>data</strong> is secure and private
         </p>
       </FeatureCard>
     </>
@@ -45,14 +45,11 @@ function FeatureSection() {
 
 const FeatureCard = ({ children }: { children: React.ReactNode }) => {
   return (
-      <div
-        className={`transition ease-in-out delay-100 duration-300 bg-resume-100 hover:bg-resume-500 text-resume-800
-      hover:text-resume-50 fill-resume-800 px-6 py-10 lg:p-12 flex shadow-md cursor-pointer relative rounded-xl h-full`}
-      >
-        <Link href="/builder" passHref={true}>
+    <div className={`transition ease-in-out delay-100 duration-300 bg-resume-100 hover:bg-resume-500 text-resume-800 hover:text-resume-50 fill-resume-800 px-6 py-10 lg:p-12 flex shadow-md cursor-pointer relative rounded-xl h-full`}>
+      <Link href="/auth" passHref={true}>
         {children}
-        </Link>
-      </div>
+      </Link>
+    </div>
   );
 };
 
