@@ -1,5 +1,6 @@
-import React, { ChangeEvent, Fragment } from 'react';
+import React, { ChangeEvent, Fragment, useState } from 'react';
 import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
 
 const Contacts = ({
   basicTabs,
@@ -8,6 +9,16 @@ const Contacts = ({
   basicTabs: any;
   onChangeHandler: (value: any, key: string) => void;
 }) => {
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+
+  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files && event.target.files[0];
+    if (file) {
+      setSelectedFile(file);
+      onChangeHandler(URL.createObjectURL(file), 'image');
+    }
+  };
+
   return (
     <Fragment>
       <TextField
@@ -26,6 +37,15 @@ const Contacts = ({
           onChangeHandler(event.target.value, 'image');
         }}
       />
+      <Button variant="contained" component="label">
+        Upload Image
+        <input
+          type="file"
+          hidden
+          accept="image/*"
+          onChange={handleFileChange}
+        />
+      </Button>
       <TextField
         label="Title"
         variant="filled"

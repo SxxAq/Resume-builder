@@ -14,7 +14,11 @@ export const PrintResume = () => {
   }, []);
 
   return (
-    <StyledButton onClick={globalThis?.print} variant="outlined">
+    <StyledButton
+      className="bg-white text-[#166534] hover:text-white"
+      onClick={globalThis?.print}
+      variant="outlined"
+    >
       Download as PDF
     </StyledButton>
   );

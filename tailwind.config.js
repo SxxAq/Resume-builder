@@ -19,6 +19,7 @@ module.exports = {
         custom: {
           grey: '#E2E7ED',
           grey100: '#E5E5E5',
+          red: '#7f1d1d',
         },
       },
       borderRadius: {

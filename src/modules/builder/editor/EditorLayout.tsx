@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
-
 import DataHeaders from './components/EditHeaders';
 import EditSection from './components/EditSection';
 import ErrorBoundary from 'src/helpers/common/components/ErrorBoundary';
-import { OutlinedButton } from 'src/helpers/common/atoms/Buttons';
+import Button from '@mui/material/Button';
+
 import { headers } from 'src/helpers/constants/editor-data';
 import { resetResumeStore } from 'src/stores/useResumeStore';
+import Save from './Save'; // Adjust the import path as necessary
 
 const EditorLayout = () => {
   const [link, setLink] = useState('');
@@ -25,9 +26,11 @@ const EditorLayout = () => {
     <ErrorBoundary>
       <div className="bg-resume-50 h-full text-resume-800 p-6 overflow-auto relative no-scrollbar shadow-level-4dp">
         {displayElement}
-
-        <div className="mt-8">
-          <OutlinedButton onClick={resetResumeStore}>Reset all edits</OutlinedButton>
+        <div className="mt-8 flex space-x-4">
+          <Save />
+          <Button className="bg-[#dc2626] text-white hover:bg-[#7f1d1d]" onClick={resetResumeStore}>
+            Reset all
+          </Button>
         </div>
       </div>
     </ErrorBoundary>

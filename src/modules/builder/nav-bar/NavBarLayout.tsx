@@ -253,7 +253,11 @@ const NavBarLayout = () => {
             />
           </StyledButton> */}
           <PrintResume />
-          <StyledButton variant="text" onClick={handleLogout}>
+          <StyledButton
+            className="bg-[#b91c1c] text-white hover:bg-[#7f1d1d]"
+            variant="outlined"
+            onClick={handleLogout}
+          >
             Logout
           </StyledButton>
         </NavBarActions>
