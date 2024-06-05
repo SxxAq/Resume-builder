@@ -15,7 +15,7 @@ export const PrintResume = () => {
 
   return (
     <StyledButton
-      className="bg-white text-[#166534] hover:text-white"
+      className="bg-white text-[#111827] hover:text-white"
       onClick={globalThis?.print}
       variant="outlined"
     >

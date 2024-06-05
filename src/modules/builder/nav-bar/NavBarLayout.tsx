@@ -252,6 +252,7 @@ const NavBarLayout = () => {
               onChange={handleFileChange}
             />
           </StyledButton> */}
+
           <PrintResume />
           <StyledButton
             className="bg-[#b91c1c] text-white hover:bg-[#7f1d1d]"

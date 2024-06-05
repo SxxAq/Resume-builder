@@ -15,8 +15,8 @@ import {
   useTechnologies,
   useTools,
 } from 'src/stores/skills';
-import { collection, doc, getDocs, query, setDoc, where } from 'firebase/firestore';
-import { db } from '../../../firebase'; // Adjust the path to your Firebase configuration
+import { collection, doc, getDoc, setDoc } from 'firebase/firestore';
+import { db, auth } from '../../../firebase'; // Adjust the path to your Firebase configuration
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -41,22 +41,24 @@ const SaveToFirestoreButton = () => {
     };
 
     try {
-      // Use user's email as the document ID
-      const userEmail = resumeData.basics.email;
+      const user = auth.currentUser;
 
-      // Check if a document with the same email exists
-      const q = query(collection(db, 'resumes'), where('basics.email', '==', userEmail));
-      const querySnapshot = await getDocs(q);
+      if (!user) {
+        toast.error('No user is currently logged in.');
+        return;
+      }
 
-      if (!querySnapshot.empty) {
+      const userUid = user.uid;
+      const docRef = doc(collection(db, 'resumes'), userUid);
+      const docSnapshot = await getDoc(docRef);
+
+      if (docSnapshot.exists()) {
         // Document exists, update it
-        const docRef = querySnapshot.docs[0].ref;
         await setDoc(docRef, resumeData, { merge: true });
         console.log('Document updated with ID: ', docRef.id);
         toast.success('Document updated successfully!');
       } else {
         // Document does not exist, create a new one
-        const docRef = doc(collection(db, 'resumes'), userEmail);
         await setDoc(docRef, resumeData);
         console.log('Document written with ID: ', docRef.id);
         toast.success('Document created successfully!');
@@ -71,7 +73,7 @@ const SaveToFirestoreButton = () => {
     <>
       <ToastContainer />
       <Button
-        className="bg-[#10b981] text-white px-8"
+        className="bg-[#10b981] text-white flex-1 px-10"
         variant="contained"
         onClick={saveDataToFirestore}
       >
