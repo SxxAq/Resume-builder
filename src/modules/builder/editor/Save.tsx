@@ -63,9 +63,13 @@ const SaveToFirestoreButton = () => {
         console.log('Document written with ID: ', docRef.id);
         toast.success('Document created successfully!');
       }
-    } catch (e) {
+    } catch (e: unknown) {
       console.error('Error adding or updating document: ', e);
-      toast.error('Error saving document: ' + e.message);
+      if (e instanceof Error) {
+        toast.error('Error saving document: ' + e.message);
+      } else {
+        toast.error('Error saving document: ' + JSON.stringify(e));
+      }
     }
   }, []);
 

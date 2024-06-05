@@ -4,7 +4,8 @@ const persons = [
   {
     name: 'Saalim Aqueel',
     role: 'Fullstack developer',
-    avatar: 'https://avatars.githubusercontent.com/u/98530202?s=400&u=066a7b7ebd92563f376acb1c0c722784db58a279&v=4',
+    avatar:
+      'https://avatars.githubusercontent.com/u/98530202?s=400&u=066a7b7ebd92563f376acb1c0c722784db58a279&v=4',
     github: 'https://github.com/',
     linkedin: 'https://www.linkedin.com/in/saalim-aqueel/',
   },
@@ -21,7 +22,7 @@ const persons = [
     avatar: 'https://avatars.githubusercontent.com/u/146617888?v=4',
     github: 'https://github.com/Mochi0010',
     linkedin: 'https://www.linkedin.com/in/',
-  }
+  },
 ];
 
 const PersonCard = ({ children }: { children: React.ReactNode }) => (

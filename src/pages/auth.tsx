@@ -93,7 +93,7 @@ const AuthPage = () => {
             onClick={() => router.push('/signup')}
             className="text-[#2E4052] hover:text-teal-700 cursor-pointer"
           >
-            Don't have an account? Sign Up
+            Don&apos;t have an account? Sign Up
           </button>
         </div>
       </div>

@@ -102,7 +102,11 @@ const HomeLayout = () => {
                   —Mark Twain
                 </p>
               </div>
-              <Button variant="contained" className="bg-resume-800 mb-2" onClick={handleBuildResumeClick}>
+              <Button
+                variant="contained"
+                className="bg-resume-800 mb-2"
+                onClick={handleBuildResumeClick}
+              >
                 BUILD YOUR RESUME
               </Button>
               <p

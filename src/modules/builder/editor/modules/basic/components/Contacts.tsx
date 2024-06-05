@@ -39,12 +39,7 @@ const Contacts = ({
       />
       <Button variant="contained" component="label">
         Upload Image
-        <input
-          type="file"
-          hidden
-          accept="image/*"
-          onChange={handleFileChange}
-        />
+        <input type="file" hidden accept="image/*" onChange={handleFileChange} />
       </Button>
       <TextField
         label="Title"

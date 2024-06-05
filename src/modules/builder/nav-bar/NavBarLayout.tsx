@@ -17,7 +17,7 @@ import { json2csv } from 'json-2-csv';
 import { signOut } from 'firebase/auth';
 import { auth } from '../../../firebase'; // Adjust the path to your Firebase configuration
 import { useRouter } from 'next/router';
-
+import { toast } from 'react-toastify';
 import { AVAILABLE_TEMPLATES } from 'src/helpers/constants';
 import DEFAULT_RESUME_JSON from 'src/helpers/constants/resume-data.json';
 import Image from 'next/image';
@@ -86,16 +86,17 @@ const NavBarLayout = () => {
     } else if (format === 'csv') {
       try {
         const flattenedData = Object.keys(updatedResumeJson).map((key) =>
-          flattenObject({ [key]: updatedResumeJson[key] })
+          flattenObject({ [key]: updatedResumeJson[key as keyof YourResumeType] })
         );
-        const csv = await json2csv(flattenedData);
+        const csv = await json2csv.parse(flattenedData);
         const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
         const link = document.createElement('a');
         link.href = URL.createObjectURL(blob);
         link.download = `${fileName}.csv`;
         link.click();
       } catch (error) {
-        console.error('Error converting JSON to CSV:', error);
+        console.error('Error exporting to CSV: ', error);
+        toast.error('Error exporting to CSV');
       }
     }
   }, []);

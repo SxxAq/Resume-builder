@@ -79,7 +79,11 @@ const ImportFromFirestoreButton = () => {
       }
     } catch (e) {
       console.error('Error importing document: ', e);
-      toast.error('Error importing document: ' + e.message);
+      if (e instanceof Error) {
+        toast.error('Error importing document: ' + e.message);
+      } else {
+        toast.error('Error importing document: ' + JSON.stringify(e));
+      }
     }
   }, []);
 
