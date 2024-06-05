@@ -3,6 +3,8 @@ import { useState } from 'react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../firebase';
 import { useRouter } from 'next/router';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import { NavBarActions } from '../modules/builder/nav-bar/atoms';
 import { motion } from 'framer-motion';
@@ -20,14 +22,16 @@ const AuthPage = () => {
     e.preventDefault();
     try {
       await signInWithEmailAndPassword(auth, email, password);
+      toast.success('Login successful!');
       router.push('/builder');
     } catch (error) {
-      console.error('Error with login:', error);
+      toast.error('Error with login: ' + error.message);
     }
   };
 
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: [0, 1] }} className="scroll-smooth">
+      <ToastContainer />
       <nav className="sticky top-0 z-20 h-14 w-full bg-resume-800 flex py-2.5 px-4 xl:px-60 items-center shadow-level-8dp">
         <Link href="/">
           <Image src={'/icons/resume-icon.png'} alt="logo" height="36" width="36" />
